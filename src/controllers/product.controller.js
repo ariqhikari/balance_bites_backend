@@ -35,7 +35,7 @@ const getEvaluateScore = async (product) => {
       Tolong berikan dengan format JSON yang **selalu** mengikuti struktur berikut:
       {
         "product": "SNICKERS Minis Size Chocolate Candy Bars Variety Mix 10.5-oz. Bag",
-        "evaluation": "Buruk",
+        "evaluation": "D",
         "reasoning": "Makanan ini mengandung 180 kalori per porsi, yang tergolong tinggi dan dapat menyumbang signifikan terhadap asupan kalori harian, terutama bagi mereka yang memiliki kebutuhan kalori rendah. Untuk menjaga keseimbangan, sebaiknya konsumsi dalam jumlah terbatas dan seimbangkan dengan pilihan makanan sehat lainnya. Kandungan lemak jenuh dalam satu porsi mencapai 8g, yang setara dengan 40% dari nilai harian yang disarankan. Ini tergolong tinggi, karena lemak jenuh berlebihan dapat meningkatkan kadar kolesterol LDL (kolesterol jahat) dan meningkatkan risiko penyakit jantung, sehingga disarankan untuk membatasi konsumsi makanan tinggi lemak jenuh.  Kandungan gula dalam makanan ini juga sangat tinggi, yakni 20g, yang bisa berkontribusi pada penambahan berat badan, kerusakan gigi, dan masalah kesehatan lainnya. Sebaiknya pilih makanan dan minuman dengan kadar gula rendah untuk menjaga kesehatan. Meskipun kadar natrium dalam makanan ini hanya 85mg, yang tergolong sedang, konsumsi berlebihan sodium tetap dapat menyebabkan tekanan darah tinggi, sehingga penting untuk memperhatikan asupan sodium dari sumber lain. Dari segi bahan-bahan, makanan ini mengandung beberapa komponen yang kurang sehat seperti sirup jagung, minyak inti sawit terhidrogenasi, dan sejumlah besar gula. Kehadiran perasa buatan juga patut dicermati, meskipun umumnya aman, bahan alami lebih disarankan. Jika memiliki alergi terhadap kacang, susu, atau kedelai, sangat penting untuk membaca label dengan teliti dan menghindari makanan ini. Sebaiknya pilih camilan dengan bahan-bahan yang lebih alami dan kurang olahan.",
         "overall_assessment": "Snickers Minis, meskipun enak, bukanlah pilihan yang sehat karena kandungan gula, lemak jenuh, dan kalori yang tinggi.  Konsumsi dalam jumlah sangat terbatas dan sesekali saja.  Pilihan camilan yang lebih sehat, seperti buah-buahan, sayuran, atau kacang-kacangan yang tidak digoreng, direkomendasikan."
       }
@@ -61,9 +61,11 @@ const getProductByUpc = async (req, res) => {
     const result = await axios.get(
       `https://api.spoonacular.com/food/products/upc/${req.query.upc}?apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
-    const product = {
+
+    let product = {
       id: result.data.id,
       title: result.data.title,
+      image: result.data.image,
       description: result.data.description,
       nutrition: result.data.nutrition,
       ingredients: result.data.ingredients.map((ingredient) => ingredient.name),
@@ -71,13 +73,13 @@ const getProductByUpc = async (req, res) => {
 
     // Panggil fungsi getEvaluateScore
     const score = await getEvaluateScore(product);
+    product.score = score;
 
     return api_response(200, res, req, {
       status: true,
       message: "Success get data product.",
       data: {
         product,
-        score,
       },
     });
   } catch (error) {
@@ -93,9 +95,11 @@ const getProduct = async (req, res) => {
     const result = await axios.get(
       `https://api.spoonacular.com/food/products/${req.query.id}?apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
-    const product = {
+
+    let product = {
       id: result.data.id,
       title: result.data.title,
+      image: result.data.image,
       description: result.data.description,
       nutrition: result.data.nutrition,
       ingredients: result.data.ingredients.map((ingredient) => ingredient.name),
@@ -103,13 +107,13 @@ const getProduct = async (req, res) => {
 
     // // Panggil fungsi getEvaluateScore
     const score = await getEvaluateScore(product);
+    product.score = score;
 
     return api_response(200, res, req, {
       status: true,
       message: "Success get data product.",
       data: {
         product,
-        score,
       },
     });
   } catch (error) {

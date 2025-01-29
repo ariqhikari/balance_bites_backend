@@ -51,7 +51,7 @@ const register = async (req, res) => {
     req.body.age = parseInt(req.body.age);
     const user = await user_model.create(req.body);
 
-    return api_response(201, res, req, {
+    return api_response(200, res, req, {
       status: true,
       message: "Success register account user.",
       data: {

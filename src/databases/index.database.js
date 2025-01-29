@@ -3,9 +3,9 @@ const Sequilize = require("sequelize");
 require("dotenv").config();
 
 // const sequilize = new Sequilize(
-//   process.env.DB_URL,
-//   "ahidayat_cinetix",
-//   "t6G}E!Yf+nPD3k(mB+",
+//   "balancebites",
+//   "userbalancebites",
+//   "3Pylb3RPdrKi0EI2skhK",
 //   {
 //     host: "localhost",
 //     dialect: "mysql",

@@ -24,7 +24,7 @@ const calculateCalories = async (req, res) => {
         "user_daily_calorie_needs": ${Math.round(dailyCalories)},
         "activity_recommendations": [
           {
-            "activity": "Berenang",
+            "name": "Berenang",
             "duration": "60 menit",
             "calories_burned": 500,
             "notes": "Berenang merupakan olahraga kardio yang efektif dan rendah dampak bagi persendian."
