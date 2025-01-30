@@ -1,6 +1,7 @@
 const { api } = require("../../configs/prefix.config");
 const {
   calculateCalories,
+  getHistoryCalculations,
 } = require("../../controllers/calculator.controller");
 const init_validation = require("../../configs/init_validation.config");
 const {
@@ -17,6 +18,10 @@ router.post(
   calculate_calories_validation,
   init_validation,
   (req, res) => calculateCalories(req, res)
+);
+
+router.get(`${api}/get-history-calculations`, auth_middleware, (req, res) =>
+  getHistoryCalculations(req, res)
 );
 
 module.exports = router;

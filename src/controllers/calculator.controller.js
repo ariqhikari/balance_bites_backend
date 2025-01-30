@@ -9,7 +9,12 @@ const calculateCalories = async (req, res) => {
     const { gender, age, height, weight } = req.body;
 
     const historyCalculationInDb = await history_calculation_model.findOne({
-      where: { userId: jwt.decode(req.headers.token).id },
+      where: {
+        gender: gender,
+        age: age,
+        height: height,
+        weight: weight,
+      },
     });
 
     if (historyCalculationInDb) {
@@ -108,8 +113,28 @@ const calculateCalories = async (req, res) => {
   }
 };
 
+const getHistoryCalculations = async (req, res) => {
+  try {
+    const result = await history_calculation_model.findOne({
+      where: { userId: jwt.decode(req.headers.token).id },
+    });
+
+    return api_response(200, res, req, {
+      status: true,
+      message: "Success get data history calculations.",
+      data: result,
+    });
+  } catch (error) {
+    return api_response(400, res, req, {
+      status: false,
+      message: error.message || "Failed get data history calculations.",
+    });
+  }
+};
+
 module.exports = {
   calculateCalories,
+  getHistoryCalculations,
 };
 
 // {
