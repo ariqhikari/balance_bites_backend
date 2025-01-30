@@ -1,9 +1,24 @@
 const { api_response } = require("../libs/response.lib");
 const { model, generationConfig } = require("../configs/gemini.config");
+const history_calculation_model = require("../databases/models/history_calculation.model");
+const jwt = require("jsonwebtoken");
+const { v1: uuidv1 } = require("uuid");
 
 const calculateCalories = async (req, res) => {
   try {
     const { gender, age, height, weight } = req.body;
+
+    const historyCalculationInDb = await history_calculation_model.findOne({
+      where: { userId: jwt.decode(req.headers.token).id },
+    });
+
+    if (historyCalculationInDb) {
+      return api_response(200, res, req, {
+        status: true,
+        message: "Success calculate calories and get recommendations.",
+        data: historyCalculationInDb,
+      });
+    }
 
     // Perhitungan BMR
     let dailyCalories = 0;
@@ -67,10 +82,23 @@ const calculateCalories = async (req, res) => {
         .replace(/`/g, "")
     );
 
+    const newHistory = await history_calculation_model.create({
+      id: `PRD-${uuidv1()}`,
+      userId: jwt.decode(req.headers.token).id,
+      gender: gender,
+      age: age,
+      height: height,
+      weight: weight,
+      calorie: response.user_daily_calorie_needs,
+      notes: response.notes,
+      activityRecommendations: response.activity_recommendations,
+      mealRecommendations: response.meal_recommendations,
+    });
+
     return api_response(200, res, req, {
       status: true,
       message: "Success calculate calories and get recommendations.",
-      data: response,
+      data: newHistory,
     });
   } catch (error) {
     return api_response(400, res, req, {
