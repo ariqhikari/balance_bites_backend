@@ -115,7 +115,7 @@ const calculateCalories = async (req, res) => {
 
 const getHistoryCalculations = async (req, res) => {
   try {
-    const result = await history_calculation_model.findOne({
+    const result = await history_calculation_model.find({
       where: { userId: jwt.decode(req.headers.token).id },
     });
 
