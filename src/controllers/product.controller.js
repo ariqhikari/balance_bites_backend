@@ -66,6 +66,8 @@ const getEvaluateScore = async (product) => {
           }
         ]
       }
+
+      Jika terdapat nurtiens yang tidak terdapat dalam produk, tidak perlu disertakan dalam JSON.
     `;
 
     const result = await chatSession.sendMessage(prompt);
