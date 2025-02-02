@@ -39,6 +39,32 @@ const getEvaluateScore = async (product) => {
         "product": "Snickers Big Bag Mini 19.5 Oz 20 Ct",
         "evaluation": "D",
         "reasoning": "Deskripsi singkat terlebih dahulu. Snickers Big Bag Mini mengandung gula yang sangat tinggi (18g per sajian), lebih dari batas yang disarankan untuk konsumsi harian. Juga mengandung lemak jenuh yang cukup banyak (3g), yang bisa meningkatkan kadar kolesterol. Meskipun kadar garam (sodium) dalam produk ini relatif rendah (80mg), tingginya kandungan gula dan lemak jenuh membuatnya tidak baik untuk kesehatan. Selain itu, produk ini rendah serat dan protein, jadi hanya memberikan kalori tanpa banyak nutrisi penting. Jika dikonsumsi berlebihan, bisa meningkatkan risiko obesitas, penyakit jantung, dan diabetes. Sebaiknya batasi konsumsi camilan ini dan pilih camilan yang lebih sehat seperti buah atau kacang-kacangan.",
+        "nutrients": [
+          {
+            "name": "Kalori",
+            "amount": 200,
+            "unit": "kcal",
+            "description": "Energi yang diberikan per porsi. Untuk diet sehat, rata-rata kebutuhan harian sekitar 2000 kcal."
+          },
+          {
+            "name": "Protein",
+            "amount": 4,
+            "unit": "g",
+            "description": "Membantu pertumbuhan otot dan pemulihan tubuh. Disarankan 50g protein per hari untuk orang dewasa."
+          },
+          {
+            "name": "Sodium",
+            "amount": 410,
+            "unit": "mg",
+            "description": "Sangat tinggi! Batas harian yang disarankan adalah 2300 mg, jadi produk ini mengandung hampir 20% dari batas harian hanya dalam satu porsi."
+          },
+          {
+            "name": "Gula",
+            "amount": 3,
+            "unit": "g",
+            "description": "Rendah, tetapi tetap perlu dikontrol jika dikonsumsi dengan makanan lain yang tinggi gula."
+          }
+        ]
       }
     `;
 
@@ -92,7 +118,11 @@ const getProductByUpc = async (req, res) => {
 
     // Panggil fungsi getEvaluateScore
     const score = await getEvaluateScore(product);
-    product.score = score;
+    product.nutrition = score.nutrients;
+    product.score = {
+      evaluation: score.evaluation,
+      reasoning: score.reasoning,
+    };
 
     const newProduct = await product_model.create({
       id: `PRD-${v1()}`,
@@ -154,7 +184,11 @@ const getProduct = async (req, res) => {
 
     // // Panggil fungsi getEvaluateScore
     const score = await getEvaluateScore(product);
-    product.score = score;
+    product.nutrition = score.nutrients;
+    product.score = {
+      evaluation: score.evaluation,
+      reasoning: score.reasoning,
+    };
 
     const newProduct = await product_model.create({
       id: `PRD-${v1()}`,
