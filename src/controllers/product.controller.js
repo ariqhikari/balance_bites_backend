@@ -32,13 +32,13 @@ const getEvaluateScore = async (product) => {
 
       ${JSON.stringify(product, null, 2)}
 
-      Berikan penilaian apakah produk ini sehat atau tidak berdasarkan beberapa aspek: kandungan kalori, kadar lemak jenuh, kandungan gula, kandungan sodium, bahan-bahan yang digunakan, dan apakah ada bahan yang berisiko atau tidak aman bagi sebagian orang. Jawaban harus berupa JSON yang jelas dengan status produk tersebut (baik atau buruk), beserta alasan yang mendukung penilaian tersebut.
+      Berikan penilaian kesehatan produk berdasarkan kalori, lemak jenuh, gula, sodium (garam), bahan-bahan, dan potensi risiko bagi sebagian orang dalam format JSON. Sertakan status produk (baik atau buruk) beserta alasan singkatnya. Gunakan istilah yang mudah dipahami dengan tanda kurung (contoh: garam [sodium]).
 
       Tolong berikan dengan format JSON yang **selalu** mengikuti struktur berikut:
       {
         "product": "Indomie Mi Goreng Instant Stir Fry Noodles, Halal Certified, Original Flavor, 2.8 OZ (24 Pack)",
         "evaluation": "C",
-        "reasoning": "Deskripsi singkat terlebih dahulu. Indomie Mi Goreng mengandung 200 kalori per porsi (80g) dengan 4g protein, 3g gula, dan 410mg sodium yang tinggi, melebihi batas harian yang disarankan. Tidak ada informasi tentang lemak jenuh, tetapi kemungkinan ada, mengingat penggunaan minyak dalam pembuatannya. Produk ini juga minim serat dan nutrisi penting. Meskipun praktis dan halal, konsumsi berlebihan dapat berdampak negatif pada kesehatan. Sebaiknya konsumsi secara terbatas dan pilih sumber makanan lebih sehat seperti nasi merah, sayur, dan buah.",
+        "reasoning": "Deskripsi singkat terlebih dahulu. Indomie Mi Goreng mengandung 200 kalori per porsi (80g) dengan 4g protein, 3g gula, dan 410mg garam (sodium) yang cukup tinggi, melebihi batas yang disarankan untuk konsumsi harian. Meskipun tidak ada informasi khusus tentang lemak jenuh, kemungkinan ada, karena minyak digunakan dalam proses pembuatannya. Produk ini juga rendah serat dan nutrisi penting lainnya. Walaupun praktis dan halal, mengonsumsi terlalu banyak Indomie Mi Goreng bisa berdampak buruk pada kesehatan. Sebaiknya konsumsi dengan bijak dan pilihlah makanan yang lebih sehat seperti nasi merah, sayur, dan buah untuk pola makan yang lebih seimbang.",
       }
     `;
 
