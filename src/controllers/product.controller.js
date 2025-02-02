@@ -7,7 +7,7 @@ const { v1 } = require("uuid");
 const getProducts = async (req, res) => {
   try {
     const result = await axios.get(
-      `https://api.spoonacular.com/food/products/search?query=${req.query.search}&apiKey=${process.env.SPOONACULAR_API_KEY}`
+      `https://api.spoonacular.com/food/products/search?query=${req.query.search}&number=20&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
 
     return api_response(200, res, req, {
