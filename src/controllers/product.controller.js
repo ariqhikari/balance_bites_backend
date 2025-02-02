@@ -36,9 +36,9 @@ const getEvaluateScore = async (product) => {
 
       Tolong berikan dengan format JSON yang **selalu** mengikuti struktur berikut:
       {
-        "product": "Indomie Mi Goreng Instant Stir Fry Noodles, Halal Certified, Original Flavor, 2.8 OZ (24 Pack)",
-        "evaluation": "C",
-        "reasoning": "Deskripsi singkat terlebih dahulu. Indomie Mi Goreng mengandung 200 kalori per porsi (80g) dengan 4g protein, 3g gula, dan 410mg garam (sodium) yang cukup tinggi, melebihi batas yang disarankan untuk konsumsi harian. Meskipun tidak ada informasi khusus tentang lemak jenuh, kemungkinan ada, karena minyak digunakan dalam proses pembuatannya. Produk ini juga rendah serat dan nutrisi penting lainnya. Walaupun praktis dan halal, mengonsumsi terlalu banyak Indomie Mi Goreng bisa berdampak buruk pada kesehatan. Sebaiknya konsumsi dengan bijak dan pilihlah makanan yang lebih sehat seperti nasi merah, sayur, dan buah untuk pola makan yang lebih seimbang.",
+        "product": "Snickers Big Bag Mini 19.5 Oz 20 Ct",
+        "evaluation": "D",
+        "reasoning": "Deskripsi singkat terlebih dahulu. Snickers Big Bag Mini mengandung gula yang sangat tinggi (18g per sajian), lebih dari batas yang disarankan untuk konsumsi harian. Juga mengandung lemak jenuh yang cukup banyak (3g), yang bisa meningkatkan kadar kolesterol. Meskipun kadar garam (sodium) dalam produk ini relatif rendah (80mg), tingginya kandungan gula dan lemak jenuh membuatnya tidak baik untuk kesehatan. Selain itu, produk ini rendah serat dan protein, jadi hanya memberikan kalori tanpa banyak nutrisi penting. Jika dikonsumsi berlebihan, bisa meningkatkan risiko obesitas, penyakit jantung, dan diabetes. Sebaiknya batasi konsumsi camilan ini dan pilih camilan yang lebih sehat seperti buah atau kacang-kacangan.",
       }
     `;
 
