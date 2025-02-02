@@ -36,9 +36,9 @@ const getEvaluateScore = async (product) => {
 
       Tolong berikan dengan format JSON yang **selalu** mengikuti struktur berikut:
       {
-        "product": "SNICKERS Minis Size Chocolate Candy Bars Variety Mix 10.5-oz. Bag",
-        "evaluation": "D",
-        "reasoning": "Penjelasan Deskripsi makanan nya terlebih dahulu, kemudian jelaskan kandungannya. Makanan ini mengandung 180 kalori per porsi, tergolong tinggi dan dapat berkontribusi signifikan pada asupan harian, terutama bagi yang memiliki kebutuhan kalori rendah. Lemak jenuh mencapai 8g (40% dari nilai harian), yang dapat meningkatkan kolesterol LDL dan risiko penyakit jantung, sehingga perlu dibatasi. Kandungan gula yang tinggi (20g) dapat memicu penambahan berat badan dan masalah kesehatan lainnya, sementara natrium 85mg masih dalam kategori sedang, tetapi tetap perlu diawasi. Makanan ini mengandung bahan kurang sehat seperti sirup jagung, minyak inti sawit terhidrogenasi, dan perasa buatan. Jika alergi terhadap kacang, susu, atau kedelai, pastikan membaca label dengan cermat. Sebaiknya pilih camilan dengan bahan lebih alami dan minim olahan.",
+        "product": "Indomie Mi Goreng Instant Stir Fry Noodles, Halal Certified, Original Flavor, 2.8 OZ (24 Pack)",
+        "evaluation": "C",
+        "reasoning": "Deskripsi singkat terlebih dahulu. Indomie Mi Goreng mengandung 200 kalori per porsi (80g) dengan 4g protein, 3g gula, dan 410mg sodium yang tinggi, melebihi batas harian yang disarankan. Tidak ada informasi tentang lemak jenuh, tetapi kemungkinan ada, mengingat penggunaan minyak dalam pembuatannya. Produk ini juga minim serat dan nutrisi penting. Meskipun praktis dan halal, konsumsi berlebihan dapat berdampak negatif pada kesehatan. Sebaiknya konsumsi secara terbatas dan pilih sumber makanan lebih sehat seperti nasi merah, sayur, dan buah.",
       }
     `;
 
