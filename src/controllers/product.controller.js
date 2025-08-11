@@ -6,17 +6,16 @@ const { v1 } = require("uuid");
 
 const getProducts = async (req, res) => {
   try {
-    let result = "";
+    const page = req.query.page || 1;
+    const search = req.query.search || null;
 
-    if (!req.query.search) {
-      result = await axios.get(
-        `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia"&page_size=20&page=1&fields=code,product_name,image_url,labels`
-      );
-    } else {
-      result = await axios.get(
-        `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia" AND product_name="${req.query.search}"&page_size=20&page=1&fields=code,product_name,image_url,labels`
-      );
+    let url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia"&page_size=20&page=${page}&fields=code,product_name,image_url,labels`;
+
+    if (search) {
+      url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia" AND product_name="${search}"&page_size=20&page=${page}&fields=code,product_name,image_url,labels`;
     }
+
+    const result = await axios.get(url);
 
     return api_response(200, res, req, {
       status: true,
@@ -28,6 +27,11 @@ const getProducts = async (req, res) => {
           title: item.product_name,
           image: item.image_url,
         })),
+      pagination: {
+        page: Number(page),
+        page_size: 20,
+        total_found: result.data.count || 0,
+      },
     });
   } catch (error) {
     return api_response(400, res, req, {
