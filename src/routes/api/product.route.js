@@ -9,20 +9,16 @@ const {
 const express = require("express");
 const router = express.Router();
 
-// router.get(`${api}/products`, auth_middleware, (req, res) =>
-//   getProducts(req, res)
-// );
-
-router.get(`${api}/products`, (req, res) => getProducts(req, res));
+router.get(`${api}/products`, auth_middleware, (req, res) =>
+  getProducts(req, res)
+);
 
 router.get(`${api}/product-upc`, auth_middleware, (req, res) =>
   getProductByUpc(req, res)
 );
 
-// router.get(`${api}/product`, auth_middleware, (req, res) =>
-//   getProduct(req, res)
-// );
-
-router.get(`${api}/product`, (req, res) => getProduct(req, res));
+router.get(`${api}/product`, auth_middleware, (req, res) =>
+  getProduct(req, res)
+);
 
 module.exports = router;
