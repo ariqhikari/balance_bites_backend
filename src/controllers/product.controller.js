@@ -21,7 +21,13 @@ const getProducts = async (req, res) => {
     return api_response(200, res, req, {
       status: true,
       message: "Success get data products.",
-      data: result.data.hits.filter((item) => item.image_url),
+      data: result.data.hits
+        .filter((item) => item.image_url)
+        .map((item) => ({
+          upc: item.code,
+          title: item.product_name,
+          image: item.image_url,
+        })),
     });
   } catch (error) {
     return api_response(400, res, req, {
@@ -90,72 +96,6 @@ const getEvaluateScore = async (product) => {
     );
   } catch (error) {
     throw new Error(error || "Failed to evaluate product.");
-  }
-};
-
-const getProductByUpc = async (req, res) => {
-  try {
-    const productInDb = await product_model.findOne({
-      where: { upc: req.query.upc },
-    });
-
-    if (productInDb) {
-      return api_response(200, res, req, {
-        status: true,
-        message: "Success get data product.",
-        data: {
-          product: productInDb,
-        },
-      });
-    }
-
-    const result = await axios.get(
-      `https://api.spoonacular.com/food/products/upc/${req.query.upc}?apiKey=${process.env.SPOONACULAR_API_KEY}`
-    );
-
-    result.data.nutrition.nutrients = result.data.nutrition.nutrients.filter(
-      (n) => n.amount > 0
-    );
-
-    let product = {
-      id: result.data.id,
-      upc: result.data.upc,
-      title: result.data.title,
-      image: result.data.image,
-      description: result.data.description,
-      nutrition: result.data.nutrition.filter((n) => n.amount > 0),
-    };
-
-    // Panggil fungsi getEvaluateScore
-    const score = await getEvaluateScore(product);
-    product.nutrition = score.nutrients;
-    product.score = {
-      evaluation: score.evaluation,
-      reasoning: score.reasoning,
-    };
-
-    const newProduct = await product_model.create({
-      id: `PRD-${v1()}`,
-      idSpoonacular: product.id,
-      upc: product.upc,
-      title: product.title,
-      image: product.image,
-      nutrition: product.nutrition,
-      score: product.score,
-    });
-
-    return api_response(200, res, req, {
-      status: true,
-      message: "Success get data product.",
-      data: {
-        product: newProduct,
-      },
-    });
-  } catch (error) {
-    return api_response(400, res, req, {
-      status: false,
-      message: error.message || "Failed get data product.",
-    });
   }
 };
 
@@ -230,6 +170,5 @@ const capitalizeFirstLetter = (val) => {
 
 module.exports = {
   getProducts,
-  getProductByUpc,
   getProduct,
 };
