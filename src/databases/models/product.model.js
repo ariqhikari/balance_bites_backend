@@ -7,10 +7,6 @@ const model = db_config.sequilize.define(
       type: db_config.Sequilize.DataTypes.STRING,
       primaryKey: true,
     },
-    idSpoonacular: {
-      type: db_config.Sequilize.DataTypes.INTEGER,
-      allowNull: false,
-    },
     upc: {
       type: db_config.Sequilize.DataTypes.STRING,
       allowNull: false,
