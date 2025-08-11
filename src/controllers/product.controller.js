@@ -22,7 +22,7 @@ const getProducts = async (req, res) => {
       status: true,
       message: "Success get data products.",
       data: result.data.hits
-        .filter((item) => item.image_url)
+        .filter((item) => item.product_name && item.code && item.image_url)
         .map((item) => ({
           upc: item.code,
           title: item.product_name,
