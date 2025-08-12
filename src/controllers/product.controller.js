@@ -9,10 +9,10 @@ const getProducts = async (req, res) => {
     const page = req.query.page || 1;
     const search = req.query.search || null;
 
-    let url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia"&page_size=20&page=${page}&code,product_name,image_url,labels,brands,quantity`;
+    let url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia"&page_size=50&page=${page}&code,product_name,image_url,labels,brands,quantity`;
 
     if (search) {
-      url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia" AND product_name="${search}"&page_size=20&page=${page}&code,product_name,image_url,labels,brands,quantity`;
+      url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia" AND product_name="${search}"&page_size=50&page=${page}&code,product_name,image_url,labels,brands,quantity`;
     }
 
     const result = await axios.get(url);
@@ -26,7 +26,6 @@ const getProducts = async (req, res) => {
             item.product_name &&
             item.code &&
             item.image_url &&
-            item.labels &&
             item.brands &&
             item.quantity
         )
