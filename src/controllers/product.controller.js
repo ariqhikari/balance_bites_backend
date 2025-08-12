@@ -9,10 +9,10 @@ const getProducts = async (req, res) => {
     const page = req.query.page || 1;
     const search = req.query.search || null;
 
-    let url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia"&page_size=20&page=${page}&fields=code,product_name,image_url,labels`;
+    let url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia"&page_size=20&page=${page}&code,product_name,image_url,labels,brands,quantity`;
 
     if (search) {
-      url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia" AND product_name="${search}"&page_size=20&page=${page}&fields=code,product_name,image_url,labels`;
+      url = `https://search.openfoodfacts.org/search?q=countries_tags:"en:indonesia" AND product_name="${search}"&page_size=20&page=${page}&code,product_name,image_url,labels,brands,quantity`;
     }
 
     const result = await axios.get(url);
@@ -21,11 +21,21 @@ const getProducts = async (req, res) => {
       status: true,
       message: "Success get data products.",
       data: result.data.hits
-        .filter((item) => item.product_name && item.code && item.image_url)
+        .filter(
+          (item) =>
+            item.product_name &&
+            item.code &&
+            item.image_url &&
+            item.labels &&
+            item.brands &&
+            item.quantity
+        )
         .map((item) => ({
           upc: item.code,
-          title: item.product_name,
+          title: capitalizeEachWord(item.product_name),
           image: item.image_url,
+          brand: item.brands[0],
+          labels: item.labels == "en:halal" ? "Halal" : item.labels,
         })),
       pagination: {
         page: Number(page),
@@ -126,7 +136,7 @@ const getProduct = async (req, res) => {
     let product = {
       upc: result.data.code,
       brand: result.data.product.brands,
-      title: capitalizeFirstLetter(result.data.product.product_name),
+      title: capitalizeEachWord(result.data.product.product_name),
       image: result.data.product.image_url,
       nutrition: result.data.product.nutriments,
       serving_quantity: result.data.product.serving_quantity,
@@ -168,9 +178,17 @@ const getProduct = async (req, res) => {
   }
 };
 
-const capitalizeFirstLetter = (val) => {
-  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-};
+function capitalizeEachWord(str) {
+  return str
+    .split(" ")
+    .map((word) => {
+      if (word.length === 0) {
+        return "";
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
 
 module.exports = {
   getProducts,
