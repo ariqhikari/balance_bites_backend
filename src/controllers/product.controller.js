@@ -129,7 +129,7 @@ const getProduct = async (req, res) => {
     }
 
     const result = await axios.get(
-      `https://world.openfoodfacts.org/api/v2/product/${req.query.upc}?fields=product_name,brands,quantity,labels_tags,countries_tags,,nutriments,image_url,serving_quantity,serving_quantity_unit,serving_size,ingredients`
+      `https://world.openfoodfacts.org/api/v2/product/${req.query.upc}?fields=product_name,brands,quantity,labels,countries_tags,,nutriments,image_url,serving_quantity,serving_quantity_unit,serving_size,ingredients`
     );
 
     let product = {
@@ -142,7 +142,8 @@ const getProduct = async (req, res) => {
       serving_quantity_unit: result.data.product.serving_quantity_unit,
       serving_size: result.data.product.serving_size,
       ingredients: result.data.product.ingredients || [],
-      labels_tags: result.data.product.labels_tags || [],
+      quantity: result.data.product.quantity,
+      labels: result.data.product.labels,
     };
 
     // // Panggil fungsi getEvaluateScore
@@ -157,6 +158,9 @@ const getProduct = async (req, res) => {
       id: `PRD-${v1()}`,
       upc: product.upc,
       title: product.title,
+      brand: product.brand,
+      labels: product.labels,
+      quantity: product.quantity,
       image: product.image,
       nutrition: product.nutrition,
       score: product.score,

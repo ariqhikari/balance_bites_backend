@@ -15,6 +15,18 @@ const model = db_config.sequilize.define(
       type: db_config.Sequilize.DataTypes.STRING,
       allowNull: false,
     },
+    brand: {
+      type: db_config.Sequilize.DataTypes.STRING,
+      allowNull: false,
+    },
+    quantity: {
+      type: db_config.Sequilize.DataTypes.STRING,
+      allowNull: false,
+    },
+    labels: {
+      type: db_config.Sequilize.DataTypes.STRING,
+      allowNull: true,
+    },
     image: {
       type: db_config.Sequilize.DataTypes.STRING,
       allowNull: false,
