@@ -32,6 +32,7 @@ const getProducts = async (req, res) => {
         .map((item) => ({
           upc: item.code,
           title: capitalizeEachWord(item.product_name),
+          quantity: item.quantity,
           image: item.image_url,
           brand: item.brands[0],
           labels: item.labels == "en:halal" ? "Halal" : item.labels,
@@ -143,7 +144,10 @@ const getProduct = async (req, res) => {
       serving_size: result.data.product.serving_size,
       ingredients: result.data.product.ingredients || [],
       quantity: result.data.product.quantity,
-      labels: result.data.product.labels,
+      labels:
+        result.data.product.labels == "en:halal"
+          ? "Halal"
+          : result.data.product.labels,
     };
 
     // // Panggil fungsi getEvaluateScore
